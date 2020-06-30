@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#003057</color>
-    <color name="colorPrimaryDark">#4986AD</color>
-    <color name="colorAccent">#F6BE00</color>
+    <color name="wguBlue">#003057</color>
+    <color name="wguLightBlue">#4986AD</color>
+    <color name="wguGold">#F6BE00</color>
+    <color name="wguGreen">#509E2F</color>
+    <color name="wguRed">#862633</color>
 </resources>

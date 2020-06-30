@@ -96,7 +96,7 @@
             android:id="@+id/termDetails_CourseRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/content_terms_item" />
+            tools:listitem="@layout/content_recyclerview_item" />
 
     </androidx.core.widget.NestedScrollView>
 

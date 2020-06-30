@@ -3,17 +3,131 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <Button
-        android:id="@+id/btnTerms"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="54dp"
-        android:layout_marginEnd="162dp"
-        android:text="@string/btnTerms"
-        app:layout_constraintEnd_toEndOf="parent"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/main_cardView_terms"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/main_image_terms"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:contentDescription="Terms"
+            android:paddingTop="15dp"
+            app:srcCompat="@drawable/ic_terms" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Terms"
+            android:textAlignment="center"
+            android:textColor="@color/wguRed"
+            android:textSize="24dp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/main_cardView_courses"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/main_image_courses"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:contentDescription="Courses"
+            android:paddingTop="35dp"
+            app:srcCompat="@drawable/ic_course" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Courses"
+            android:textAlignment="center"
+            android:textColor="@color/wguRed"
+            android:textSize="24dp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/main_cardView_assessments"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="16dp"
+        android:paddingTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_cardView_terms">
+
+        <ImageView
+            android:id="@+id/main_image_assessments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:contentDescription="Assessments"
+            android:paddingTop="35dp"
+            app:srcCompat="@drawable/ic_assessment" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Courses"
+            android:textAlignment="center"
+            android:textColor="@color/wguRed"
+            android:textSize="24dp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/main_cardView_mentors"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginEnd="16dp"
+        android:paddingTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_cardView_courses">
+
+        <ImageView
+            android:id="@+id/main_image_mentors"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:contentDescription="Mentors"
+            android:paddingTop="35dp"
+
+            app:srcCompat="@drawable/ic_mentor" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Courses"
+            android:textAlignment="center"
+            android:textColor="@color/wguRed"
+            android:textSize="24dp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@mipmap/wgu_seal" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

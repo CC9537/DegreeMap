@@ -13,5 +13,5 @@
         android:padding="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/content_terms_item" />
+        tools:listitem="@layout/content_recyclerview_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>

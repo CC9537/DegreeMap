@@ -89,7 +89,7 @@ public abstract class DegreeMapDatabase extends RoomDatabase {
                 Mentor mentor1 = new Mentor();
                 mentor1.setMentorId(1);
                 mentor1.setMentorName("Mentor One");
-                mentor1.setMentorEmail("mentor.one@my.wgu.edu");
+                mentor1.setMentorEmail("ic_mentor.one@my.wgu.edu");
                 mentor1.setMentorPhone("801-555-1212");
                 mentor1.setCourseIdFk(1);
                 mentorDao.createMentor(mentor1);
@@ -97,7 +97,7 @@ public abstract class DegreeMapDatabase extends RoomDatabase {
                 Mentor mentor2 = new Mentor();
                 mentor2.setMentorId(2);
                 mentor2.setMentorName("Mentor two");
-                mentor2.setMentorEmail("mentor.two@my.wgu.edu");
+                mentor2.setMentorEmail("ic_mentor.two@my.wgu.edu");
                 mentor2.setMentorPhone("801-555-2121");
                 mentor2.setCourseIdFk(2);
                 mentorDao.createMentor(mentor2);

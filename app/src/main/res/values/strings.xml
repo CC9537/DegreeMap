@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">DegreeMap</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">WGU Degree Mapper</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -9,10 +9,10 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="title_activity_term">TermActivity</string>
+    <string name="title_activity_term">Terms</string>
     <string name="btnTerms">Terms</string>
     <string name="btnBack">Main</string>
-    <string name="title_activity_term_add">TermAddActivity</string>
-    <string name="title_activity_term_details">TermDetailsActivity</string>
-    <string name="title_activity_term_edit">TermEditActivity</string>
+    <string name="title_activity_term_add">Add Term</string>
+    <string name="title_activity_term_details">Term Details</string>
+    <string name="title_activity_term_edit">Edit Term</string>
 </resources>
