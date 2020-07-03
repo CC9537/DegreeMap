@@ -15,4 +15,12 @@
     <string name="title_activity_term_add">Add Term</string>
     <string name="title_activity_term_details">Term Details</string>
     <string name="title_activity_term_edit">Edit Term</string>
+    <string name="terms">Terms</string>
+    <string name="courses">Courses</string>
+    <string name="term_name">Term Name</string>
+    <string name="term_start_date">Term Start Date</string>
+    <string name="term_end_date">Term End Date</string>
+    <string name="add_course">Add Course</string>
+    <string name="save_term">Save Term</string>
+    <string name="add_term">Add Term</string>
 </resources>

@@ -20,7 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="15dp"
-            android:contentDescription="Terms"
             android:paddingTop="15dp"
             app:srcCompat="@drawable/ic_terms" />
 
@@ -28,10 +27,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Terms"
+            android:text="@string/terms"
             android:textAlignment="center"
             android:textColor="@color/wguRed"
-            android:textSize="24dp" />
+            android:textSize="24sp" />
 
     </androidx.cardview.widget.CardView>
 
@@ -48,7 +47,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="15dp"
-            android:contentDescription="Courses"
             android:paddingTop="35dp"
             app:srcCompat="@drawable/ic_course" />
 
@@ -56,10 +54,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Courses"
+            android:text="@string/courses"
             android:textAlignment="center"
             android:textColor="@color/wguRed"
-            android:textSize="24dp" />
+            android:textSize="24sp" />
 
     </androidx.cardview.widget.CardView>
 
@@ -77,7 +75,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="15dp"
-            android:contentDescription="Assessments"
             android:paddingTop="35dp"
             app:srcCompat="@drawable/ic_assessment" />
 
@@ -85,10 +82,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Courses"
+            android:text="@string/courses"
             android:textAlignment="center"
             android:textColor="@color/wguRed"
-            android:textSize="24dp" />
+            android:textSize="24sp" />
 
     </androidx.cardview.widget.CardView>
 
@@ -106,7 +103,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="15dp"
-            android:contentDescription="Mentors"
             android:paddingTop="35dp"
 
             app:srcCompat="@drawable/ic_mentor" />
@@ -115,10 +111,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Courses"
+            android:text="@string/courses"
             android:textAlignment="center"
             android:textColor="@color/wguRed"
-            android:textSize="24dp" />
+            android:textSize="24sp" />
 
     </androidx.cardview.widget.CardView>
 
