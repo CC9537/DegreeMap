@@ -9,30 +9,29 @@ import com.chancellor.degreemap.models.Term;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 
 public interface iDegreeMapRepository {
     //Terms CRUD
-    Completable createTerm(Term term);
+    void createTerm(Term term);
 
-    Completable createAllTerms(Term... terms);
+    void createAllTerms(Term... terms);
 
-    Completable updateTerm(Term term);
+    void updateTerm(Term term);
 
-    Completable deleteTerm(Term term);
+    void deleteTerm(Term term);
 
     LiveData<List<Term>> getTermList();
 
     LiveData<Term> getTermById(int termId);
 
     //Courses CRUD
-    Completable createCourse(Course course);
+    void createCourse(Course course);
 
-    Completable createAllCourses(Course... courses);
+    void createAllCourses(Course... courses);
 
-    Completable updateCourse(Course course);
+    void updateCourse(Course course);
 
-    Completable deleteCourse(Course course);
+    void deleteCourse(Course course);
 
     LiveData<List<Course>> getCourseList();
 
@@ -41,13 +40,13 @@ public interface iDegreeMapRepository {
     LiveData<List<Course>> getCoursesByTermId(int termId);
 
     //Assessment CRUD
-    Completable createAssessment(Assessment assessment);
+    void createAssessment(Assessment assessment);
 
-    Completable createAllAssessments(Assessment... assessments);
+    void createAllAssessments(Assessment... assessments);
 
-    Completable updateAssessment(Assessment assessment);
+    void updateAssessment(Assessment assessment);
 
-    Completable deleteAssessment(Assessment assessment);
+    void deleteAssessment(Assessment assessment);
 
     LiveData<List<Assessment>> getAssessmentList();
 
@@ -56,13 +55,13 @@ public interface iDegreeMapRepository {
     LiveData<List<Assessment>> getAssessmentsByCourseId(int courseId);
 
     //Mentor CRUD
-    Completable createMentor(Mentor mentor);
+    void createMentor(Mentor mentor);
 
-    Completable createAllMentors(Mentor... mentors);
+    void createAllMentors(Mentor... mentors);
 
-    Completable updateMentor(Mentor mentor);
+    void updateMentor(Mentor mentor);
 
-    Completable deleteMentor(Mentor mentor);
+    void deleteMentor(Mentor mentor);
 
     LiveData<List<Mentor>> getMentorList();
 

@@ -11,7 +11,6 @@ import com.chancellor.degreemap.models.Term;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 
 public class DegreeMapRepository implements iDegreeMapRepository {
 
@@ -22,23 +21,25 @@ public class DegreeMapRepository implements iDegreeMapRepository {
     }
 
     @Override
-    public Completable createTerm(Term term) {
-        return Completable.fromAction(() -> db.termDao().createTerm(term));
+    public void createTerm(Term term) {
+        db.databaseWriteExecutor.execute(() -> {
+            db.termDao().createTerm(term);
+        });
     }
 
     @Override
-    public Completable createAllTerms(Term... terms) {
-        return Completable.fromAction(() -> db.termDao().createAllTerms(terms));
+    public void createAllTerms(Term... terms) {
+        db.databaseWriteExecutor.execute(() -> db.termDao().createAllTerms(terms));
     }
 
     @Override
-    public Completable updateTerm(Term term) {
-        return Completable.fromAction(() -> db.termDao().updateTerm(term));
+    public void updateTerm(Term term) {
+        db.databaseWriteExecutor.execute(() -> db.termDao().updateTerm(term));
     }
 
     @Override
-    public Completable deleteTerm(Term term) {
-        return Completable.fromAction(() -> db.termDao().deleteTerm(term));
+    public void deleteTerm(Term term) {
+        db.databaseWriteExecutor.execute(() -> db.termDao().deleteTerm(term));
     }
 
     @Override
@@ -52,23 +53,23 @@ public class DegreeMapRepository implements iDegreeMapRepository {
     }
 
     @Override
-    public Completable createCourse(Course course) {
-        return Completable.fromAction(() -> db.courseDao().createCourse(course));
+    public void createCourse(Course course) {
+        db.databaseWriteExecutor.execute(() -> db.courseDao().createCourse(course));
     }
 
     @Override
-    public Completable createAllCourses(Course... courses) {
-        return Completable.fromAction(() -> db.courseDao().createAllCourses(courses));
+    public void createAllCourses(Course... courses) {
+        db.databaseWriteExecutor.execute(() -> db.courseDao().createAllCourses(courses));
     }
 
     @Override
-    public Completable updateCourse(Course course) {
-        return Completable.fromAction(() -> db.courseDao().updateCourse(course));
+    public void updateCourse(Course course) {
+        db.databaseWriteExecutor.execute(() -> db.courseDao().updateCourse(course));
     }
 
     @Override
-    public Completable deleteCourse(Course course) {
-        return Completable.fromAction(() -> db.courseDao().deleteCourse(course));
+    public void deleteCourse(Course course) {
+        db.databaseWriteExecutor.execute(() -> db.courseDao().deleteCourse(course));
     }
 
     @Override
@@ -87,23 +88,23 @@ public class DegreeMapRepository implements iDegreeMapRepository {
     }
 
     @Override
-    public Completable createAssessment(Assessment assessment) {
-        return Completable.fromAction(() -> db.assessmentDao().createAssessment(assessment));
+    public void createAssessment(Assessment assessment) {
+        db.databaseWriteExecutor.execute(() -> db.assessmentDao().createAssessment(assessment));
     }
 
     @Override
-    public Completable createAllAssessments(Assessment... assessments) {
-        return Completable.fromAction(() -> db.assessmentDao().createAllAssessments(assessments));
+    public void createAllAssessments(Assessment... assessments) {
+        db.databaseWriteExecutor.execute(() -> db.assessmentDao().createAllAssessments(assessments));
     }
 
     @Override
-    public Completable updateAssessment(Assessment assessment) {
-        return Completable.fromAction(() -> db.assessmentDao().updateAssessment(assessment));
+    public void updateAssessment(Assessment assessment) {
+        db.databaseWriteExecutor.execute(() -> db.assessmentDao().updateAssessment(assessment));
     }
 
     @Override
-    public Completable deleteAssessment(Assessment assessment) {
-        return Completable.fromAction(() -> db.assessmentDao().deleteAssessment(assessment));
+    public void deleteAssessment(Assessment assessment) {
+        db.databaseWriteExecutor.execute(() -> db.assessmentDao().deleteAssessment(assessment));
     }
 
     @Override
@@ -122,23 +123,23 @@ public class DegreeMapRepository implements iDegreeMapRepository {
     }
 
     @Override
-    public Completable createMentor(Mentor mentor) {
-        return Completable.fromAction(() -> db.mentorDao().createMentor(mentor));
+    public void createMentor(Mentor mentor) {
+        db.databaseWriteExecutor.execute(() -> db.mentorDao().createMentor(mentor));
     }
 
     @Override
-    public Completable createAllMentors(Mentor... mentors) {
-        return Completable.fromAction(() -> db.mentorDao().createAllMentors(mentors));
+    public void createAllMentors(Mentor... mentors) {
+        db.databaseWriteExecutor.execute(() -> db.mentorDao().createAllMentors(mentors));
     }
 
     @Override
-    public Completable updateMentor(Mentor mentor) {
-        return Completable.fromAction(() -> db.mentorDao().updateMentor(mentor));
+    public void updateMentor(Mentor mentor) {
+        db.databaseWriteExecutor.execute(() -> db.mentorDao().updateMentor(mentor));
     }
 
     @Override
-    public Completable deleteMentor(Mentor mentor) {
-        return Completable.fromAction(() -> db.mentorDao().deleteMentor(mentor));
+    public void deleteMentor(Mentor mentor) {
+        db.databaseWriteExecutor.execute(() -> db.mentorDao().deleteMentor(mentor));
     }
 
     @Override

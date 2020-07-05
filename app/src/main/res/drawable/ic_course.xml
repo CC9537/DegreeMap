@@ -8,5 +8,5 @@
       android:fillColor="@color/wguBlue"/>
   <path
       android:pathData="M55,66.25L11.25,66.25c-1.3808,0 -2.5,1.1194 -2.5,2.5 0,1.3806 1.1192,2.5 2.5,2.5l43.75,0c1.3808,0 2.5,-1.1194 2.5,-2.5 0,-1.3806 -1.1192,-2.5 -2.5,-2.5z"
-      android:fillColor="@color/wguLightBlue"/>
+      android:fillColor="@color/wguGold"/>
 </vector>

@@ -18,6 +18,7 @@ import java.util.List;
 
 public class TermListAdapter extends RecyclerView.Adapter<TermListAdapter.TermViewHolder> {
 
+    private static final String TAG = "TermListAdapter";
     private final LayoutInflater layoutInflater;
     private final Context context;
     private List<Term> terms;
@@ -65,10 +66,7 @@ public class TermListAdapter extends RecyclerView.Adapter<TermListAdapter.TermVi
                 int position = getAdapterPosition();
                 final Term current = terms.get(position);
                 Intent intent = new Intent(context, TermDetailsActivity.class);
-                intent.putExtra("termID", current.getTermId());
-                intent.putExtra("termName", current.getTermName());
-                intent.putExtra("termStart", current.getTermStart().toString());
-                intent.putExtra("termEnd", current.getTermEnd().toString());
+                intent.putExtra("Term", current);
                 context.startActivity(intent);
             });
         }

@@ -9,10 +9,11 @@ import androidx.room.TypeConverters;
 
 import com.chancellor.degreemap.utilities.DateTypeConverter;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 @Entity(tableName = "terms", indices = {@Index("term_id")})
-public class Term {
+public class Term implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "term_id")
@@ -62,7 +63,8 @@ public class Term {
     @Override
     public String toString() {
         return "Term{" +
-                "termName='" + termName + '\'' +
+                "termId=" + termId +
+                ", termName='" + termName + '\'' +
                 ", termStart=" + termStart +
                 ", termEnd=" + termEnd +
                 '}';

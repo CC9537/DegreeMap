@@ -60,7 +60,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Co
             courseItemView = itemView.findViewById(R.id.itemTextView);
 //            itemView.setOnClickListener((v) -> {
 //                int position = getAdapterPosition();
-//                final Term current = terms.get(position);
+//                final Course current = courses.get(position);
 //                Intent intent = new Intent(context, TermDetailsActivity.class);
 //                intent.putExtra("termID", current.getTermId());
 //                intent.putExtra("termName", current.getTermName());

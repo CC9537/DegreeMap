@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.chancellor.degreemap.R;
 import com.chancellor.degreemap.models.Term;
+import com.chancellor.degreemap.utilities.DateTypeConverter;
 import com.chancellor.degreemap.viewadapters.TermListAdapter;
 import com.chancellor.degreemap.viewmodels.TermViewModel;
 import com.google.android.material.button.MaterialButton;
@@ -30,6 +31,7 @@ public class TermAddActivity extends AppCompatActivity {
     EditText termStart;
     EditText termEnd;
     DatePickerDialog.OnDateSetListener setListener;
+    Term term = new Term();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +39,11 @@ public class TermAddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_term_add);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         termName = findViewById(R.id.termAdd_TermName);
         termStart = findViewById(R.id.termAdd_TermStartDate);
         termEnd = findViewById(R.id.termAdd_TermEndDate);
-
-        setEditableFalse(termStart);
-        setEditableFalse(termEnd);
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -105,23 +105,23 @@ public class TermAddActivity extends AppCompatActivity {
             }
         });
 
-        MaterialButton fab = findViewById(R.id.termAdd_Save);
-        fab.setOnClickListener(new View.OnClickListener() {
+        MaterialButton termAdd_SaveButton = findViewById(R.id.termAdd_Save);
+        termAdd_SaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent replyIntent = new Intent();
-                String termNameVal = termName.getText().toString();
-                String termStartVal = termStart.getText().toString();
-                String termEndVal = termEnd.getText().toString();
+                term.setTermName(termName.getText().toString());
+                term.setTermStart(DateTypeConverter.toDate(termStart.getText().toString()));
+                term.setTermEnd(DateTypeConverter.toDate(termEnd.getText().toString()));
 
 
-                if (termNameVal.isEmpty() || termStartVal.isEmpty() || termEndVal.isEmpty())
+                if (term.getTermName().isEmpty() ||
+                        term.getTermStart().toString().isEmpty() ||
+                        term.getTermEnd().toString().isEmpty())
                     Snackbar.make(view, "Error! Name, Start and End Date can't be blank.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 else {
-                    replyIntent.putExtra("termName", termNameVal);
-                    replyIntent.putExtra("termStart", termStartVal);
-                    replyIntent.putExtra("termEnd", termEndVal);
+                    replyIntent.putExtra("Term", term);
                     setResult(RESULT_OK, replyIntent);
                 }
                 finish();
@@ -129,9 +129,11 @@ public class TermAddActivity extends AppCompatActivity {
         });
     }
 
-    private void setEditableFalse(EditText editText) {
-        editText.setFocusable(false);
-        editText.setClickable(false);
-        editText.setCursorVisible(false);
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent mainActivityIntent = new Intent(getApplicationContext(), TermActivity.class);
+        startActivity(mainActivityIntent);
+        super.onBackPressed();
+        return true;
     }
 }

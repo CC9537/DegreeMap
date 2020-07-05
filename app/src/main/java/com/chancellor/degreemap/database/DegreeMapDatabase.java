@@ -31,8 +31,8 @@ public abstract class DegreeMapDatabase extends RoomDatabase {
 
     private static DegreeMapDatabase.Callback populateDatabaseCallback = new DegreeMapDatabase.Callback() {
         @Override
-        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-            super.onOpen(db);
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
 
             databaseWriteExecutor.execute(() -> {
                 TermDao termDao = INSTANCE.termDao();
@@ -41,7 +41,7 @@ public abstract class DegreeMapDatabase extends RoomDatabase {
                 AssessmentDao assessmentDao = INSTANCE.assessmentDao();
 
 
-                termDao.deleteAllTerms();
+                //termDao.deleteAllTerms();
 
                 Term term1 = new Term();
                 term1.setTermId(1);

@@ -7,12 +7,43 @@
         <item name="colorAccent">@color/wguGold</item>
     </style>
 
-    <style name="term_title">
+    <style name="activity_content_base">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginBottom">8dp</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:background">@android:color/holo_orange_light</item>
-        <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="date_field">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawableEnd">@drawable/ic_calendar</item>
+        <item name="android:clickable">false</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:focusable">false</item>
+        <item name="android:inputType">date</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="text_editable">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="text_noneditable">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">false</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:focusable">false</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="cardview_base">
+        <item name="android:layout_width">160dp</item>
+        <item name="android:layout_height">160dp</item>
+        <item name="layout_goneMarginStart">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

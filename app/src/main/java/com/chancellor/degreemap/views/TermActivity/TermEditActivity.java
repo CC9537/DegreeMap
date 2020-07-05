@@ -1,16 +1,38 @@
 package com.chancellor.degreemap.views.TermActivity;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.chancellor.degreemap.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.chancellor.degreemap.models.Term;
+import com.chancellor.degreemap.utilities.DateTypeConverter;
+import com.chancellor.degreemap.viewadapters.TermListAdapter;
+import com.chancellor.degreemap.viewmodels.TermViewModel;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Calendar;
+import java.util.List;
+
 public class TermEditActivity extends AppCompatActivity {
+    private static final String TAG = "TermEditActivity";
+    TermViewModel termViewModel;
+    EditText termName;
+    EditText termStartDate;
+    EditText termEndDate;
+    DatePickerDialog.OnDateSetListener setListener;
+    Term term;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +40,108 @@ public class TermEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_term_edit);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        termName = findViewById(R.id.termEdit_TermName);
+        termStartDate = findViewById(R.id.termEdit_TermStartDate);
+        termEndDate = findViewById(R.id.termEdit_TermEndDate);
+
+        term = (Term) getIntent().getSerializableExtra("Term");
+
+        termName.setText(term.getTermName());
+        termStartDate.setText(term.getTermStart().toString());
+        termEndDate.setText(term.getTermEnd().toString());
+
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        final TermListAdapter termListAdapter = new TermListAdapter(this);
+        termViewModel = new ViewModelProvider(this).get(TermViewModel.class);
+        termViewModel.getTermList().observe(this, new Observer<List<Term>>() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onChanged(List<Term> terms) {
+                termListAdapter.setTerms(terms);
             }
         });
+
+        termStartDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        TermEditActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Month returned is 0 based, so add 1
+                        month = month + 1;
+                        String date = year + "-" +
+                                //Format with leading zero (if needed), no library helper
+                                ("00" + String.valueOf(month)).substring(String.valueOf(month).length())
+                                + "-" +
+                                //Format with leading zero (if needed), no library helper
+                                ("00" + String.valueOf(dayOfMonth)).substring(String.valueOf(dayOfMonth).length());
+                        termStartDate.setText(date);
+                    }
+                }, year, month, day);
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+                datePickerDialog.show();
+            }
+        });
+
+        termEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        TermEditActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Month returned is 0 based, so add 1
+                        month = month + 1;
+                        String date = year + "-" +
+                                //Format with leading zero (if needed), no library helper
+                                ("00" + String.valueOf(month)).substring(String.valueOf(month).length())
+                                + "-" +
+                                //Format with leading zero (if needed), no library helper
+                                ("00" + String.valueOf(dayOfMonth)).substring(String.valueOf(dayOfMonth).length());
+                        termEndDate.setText(date);
+                    }
+                }, year, month, day);
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+                datePickerDialog.show();
+            }
+        });
+
+        MaterialButton termEdit_SaveButton = findViewById(R.id.termEdit_Save);
+        termEdit_SaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent replyIntent = new Intent();
+                term.setTermName(termName.getText().toString());
+                term.setTermStart(DateTypeConverter.toDate(termStartDate.getText().toString()));
+                term.setTermEnd(DateTypeConverter.toDate(termEndDate.getText().toString()));
+
+
+                if (term.getTermName().isEmpty() ||
+                        term.getTermStart().toString().isEmpty() ||
+                        term.getTermEnd().toString().isEmpty())
+                    Snackbar.make(view, "Error! Name, Start and End Date can't be blank.",
+                            Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                else {
+                    replyIntent.putExtra("Term", term);
+                    setResult(RESULT_OK, replyIntent);
+                }
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent mainActivityIntent = new Intent(getApplicationContext(), TermActivity.class);
+        startActivity(mainActivityIntent);
+        super.onBackPressed();
+        return true;
     }
 }
