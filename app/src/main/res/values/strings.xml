@@ -23,4 +23,18 @@
     <string name="add_course">Add Course</string>
     <string name="save_term">Save Term</string>
     <string name="add_term">Add Term</string>
+    <string name="title_activity_course">CourseActivity</string>
+    <string name="title_activity_">Activity</string>
+    <string name="title_activity_course_edit">CourseEditActivity</string>
+    <string name="title_activity_course_details">CourseDetailsActivity</string>
+    <string name="title_activity_assessment">AssessmentActivity</string>
+    <string name="title_activity_assessment_add">AssessmentAddActivity</string>
+    <string name="title_activity_assessment_details">AssessmentDetailsActivity</string>
+    <string name="title_activity_assessment_edit">AssessmentEditActivity</string>
+    <string name="title_activity_mentor">MentorActivity</string>
+    <string name="title_activity_mentor_add">MentorAddActivity</string>
+    <string name="title_activity_mentor_details">MentorDetailsActivity</string>
+    <string name="title_activity_mentor_edit">MentorEditActivity</string>
+    <string name="edit_term">Edit Term</string>
+    <string name="delete_term">Delete Term</string>
 </resources>

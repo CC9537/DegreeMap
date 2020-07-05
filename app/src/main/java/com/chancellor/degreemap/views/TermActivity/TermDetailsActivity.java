@@ -1,11 +1,15 @@
 package com.chancellor.degreemap.views.TermActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,7 +25,7 @@ import com.chancellor.degreemap.viewadapters.CourseListAdapter;
 import com.chancellor.degreemap.viewadapters.TermListAdapter;
 import com.chancellor.degreemap.viewmodels.CourseViewModel;
 import com.chancellor.degreemap.viewmodels.TermViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -30,6 +34,7 @@ public class TermDetailsActivity extends AppCompatActivity {
     private static final int TERM_EDIT_ACTIVITY_REQUEST_CODE = 2;
     private static final String TAG = "TermDetailsActivity";
     TermViewModel termViewModel;
+    int numCoursesAssignedThisTerm = 0;
     Term term;
 
     @Override
@@ -72,6 +77,7 @@ public class TermDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(List<Course> courses) {
                         courseListAdapter.setCourses(courses);
+                        numCoursesAssignedThisTerm = courseListAdapter.getItemCount();
                     }
                 });
 
@@ -85,15 +91,7 @@ public class TermDetailsActivity extends AppCompatActivity {
 //            }
 //        });
 
-        FloatingActionButton editTermFAB = findViewById(R.id.termDetails_EditTerm);
-        editTermFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent editTermIntent = new Intent(getApplicationContext(), TermEditActivity.class);
-                editTermIntent.putExtra("Term", term);
-                startActivityForResult(editTermIntent, TERM_EDIT_ACTIVITY_REQUEST_CODE);
-            }
-        });
+
     }
 
     @Override
@@ -108,6 +106,50 @@ public class TermDetailsActivity extends AppCompatActivity {
             startActivity(returnTo);
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.term_details_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.termDetails_EditTermMenu:
+                Intent editTermIntent = new Intent(getApplicationContext(), TermEditActivity.class);
+                editTermIntent.putExtra("Term", term);
+                startActivityForResult(editTermIntent, TERM_EDIT_ACTIVITY_REQUEST_CODE);
+                return true;
+            case R.id.termDetails_DeleteTermMenu:
+                if (numCoursesAssignedThisTerm > 0)
+                    Snackbar.make(getWindow().getDecorView(), "Error! Can't delete term when courses exist.", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                else {
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    termViewModel.deleteTerm(term);
+                                    break;
+
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    break;
+                            }
+                            Intent returnTo = new Intent(getApplicationContext(), TermActivity.class);
+                            startActivity(returnTo);
+                        }
+                    };
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(TermDetailsActivity.this);
+                    builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                            .setNegativeButton("No", dialogClickListener).show();
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
