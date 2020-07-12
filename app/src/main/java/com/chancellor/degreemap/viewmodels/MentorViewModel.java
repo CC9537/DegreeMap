@@ -16,15 +16,19 @@ public class MentorViewModel extends AndroidViewModel {
 
     private LiveData<List<Mentor>> mentorList;
 
-    public MentorViewModel(@NonNull Application application, int courseId) {
+    public MentorViewModel(@NonNull Application application) {
         super(application);
         degreeMapRepository = new DegreeMapRepository(application);
-        mentorList = degreeMapRepository.getMentorsByCourseId(courseId);
+        mentorList = degreeMapRepository.getMentorList();
     }
 
     public LiveData<List<Mentor>> getMentorList() {
         return mentorList;
     }
+
+//    public LiveData<Mentor> getMentorForCourse(int courseId) {
+//        return degreeMapRepository.getMentorByCourseId(courseId);
+//    }
 
     public void insertMentor(Mentor mentor) {
         degreeMapRepository.createMentor(mentor);

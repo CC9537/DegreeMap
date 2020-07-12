@@ -1,6 +1,7 @@
 package com.chancellor.degreemap.viewadapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chancellor.degreemap.R;
 import com.chancellor.degreemap.models.Course;
+import com.chancellor.degreemap.views.CourseActivity.CourseDetailsActivity;
 
 import java.util.List;
 
@@ -58,16 +60,13 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Co
         public CourseViewHolder(@NonNull View itemView) {
             super(itemView);
             courseItemView = itemView.findViewById(R.id.itemTextView);
-//            itemView.setOnClickListener((v) -> {
-//                int position = getAdapterPosition();
-//                final Course current = courses.get(position);
-//                Intent intent = new Intent(context, TermDetailsActivity.class);
-//                intent.putExtra("termID", current.getTermId());
-//                intent.putExtra("termName", current.getTermName());
-//                intent.putExtra("termStart", current.getTermStart().toString());
-//                intent.putExtra("termEnd", current.getTermEnd().toString());
-//                context.startActivity(intent);
-//            });
+            itemView.setOnClickListener((v) -> {
+                int position = getAdapterPosition();
+                final Course current = courses.get(position);
+                Intent intent = new Intent(context, CourseDetailsActivity.class);
+                intent.putExtra("Course", current);
+                context.startActivity(intent);
+            });
         }
     }
 }

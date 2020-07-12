@@ -87,6 +87,12 @@ public class DegreeMapRepository implements iDegreeMapRepository {
         return db.courseDao().getCoursesByTermId(termId);
     }
 
+//    @Override
+//    public LiveData<Mentor> getMentorByCourseId(int courseId) {
+//        int mentorId = db.courseDao().getMentorIdByCourseId(courseId);
+//        return db.mentorDao().getMentorById(mentorId);
+//    }
+
     @Override
     public void createAssessment(Assessment assessment) {
         db.databaseWriteExecutor.execute(() -> db.assessmentDao().createAssessment(assessment));
@@ -152,8 +158,8 @@ public class DegreeMapRepository implements iDegreeMapRepository {
         return db.mentorDao().getMentorById(mentorId);
     }
 
-    @Override
-    public LiveData<List<Mentor>> getMentorsByCourseId(int courseId) {
-        return db.mentorDao().getMentorsByCourseId(courseId);
-    }
+//    @Override
+//    public LiveData<List<Mentor>> getMentorsByCourseId(int courseId) {
+//        return db.mentorDao().getMentorsByCourseId(courseId);
+//    }
 }

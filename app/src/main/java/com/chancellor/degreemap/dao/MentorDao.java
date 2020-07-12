@@ -20,8 +20,8 @@ public interface MentorDao {
     @Query("SELECT * FROM mentors WHERE mentor_id = :mentorId")
     LiveData<Mentor> getMentorById(int mentorId);
 
-    @Query("SELECT * FROM mentors WHERE course_id_fk = :courseId")
-    LiveData<List<Mentor>> getMentorsByCourseId(int courseId);
+//    @Query("SELECT * FROM mentors WHERE course_id_fk = :courseId")
+//    LiveData<List<Mentor>> getMentorsByCourseId(int courseId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void createMentor(Mentor mentor);

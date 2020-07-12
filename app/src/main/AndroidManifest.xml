@@ -50,8 +50,8 @@
             android:label="@string/title_activity_course_edit"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".views.CourseActivity.CouseAddActivity"
-            android:label="@string/title_activity_"
+            android:name=".views.CourseActivity.CourseAddActivity"
+            android:label="@string/title_activity_course_add"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".views.CourseActivity.CourseActivity"

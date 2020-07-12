@@ -4,9 +4,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -22,9 +22,10 @@ import com.chancellor.degreemap.R;
 import com.chancellor.degreemap.models.Course;
 import com.chancellor.degreemap.models.Term;
 import com.chancellor.degreemap.viewadapters.CourseListAdapter;
-import com.chancellor.degreemap.viewadapters.TermListAdapter;
 import com.chancellor.degreemap.viewmodels.CourseViewModel;
 import com.chancellor.degreemap.viewmodels.TermViewModel;
+import com.chancellor.degreemap.views.CourseActivity.CourseAddActivity;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -32,7 +33,7 @@ import java.util.List;
 public class TermDetailsActivity extends AppCompatActivity {
     private static final int COURSE_ADD_ACTIVITY_REQUEST_CODE = 1;
     private static final int TERM_EDIT_ACTIVITY_REQUEST_CODE = 2;
-    private static final String TAG = "TermDetailsActivity";
+
     TermViewModel termViewModel;
     int numCoursesAssignedThisTerm = 0;
     Term term;
@@ -56,14 +57,8 @@ public class TermDetailsActivity extends AppCompatActivity {
         termStartDate.setText(term.getTermStart().toString());
         termEndDate.setText(term.getTermEnd().toString());
 
-        final TermListAdapter termListAdapter = new TermListAdapter(this);
         termViewModel = new ViewModelProvider(this).get(TermViewModel.class);
-        termViewModel.getTermList().observe(this, new Observer<List<Term>>() {
-            @Override
-            public void onChanged(List<Term> terms) {
-                termListAdapter.setTerms(terms);
-            }
-        });
+
 
         RecyclerView termDetailsCourseRecyclerView = findViewById(R.id.termDetails_CourseRecyclerView);
         final CourseListAdapter courseListAdapter = new CourseListAdapter(this);
@@ -81,15 +76,14 @@ public class TermDetailsActivity extends AppCompatActivity {
                     }
                 });
 
-        // Uncomment after adding CourseAddActivity
-//        ExtendedFloatingActionButton addCourseFAB = findViewById(R.id.termDetails_AddCourseFAB);
-//        addCourseFAB.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent addTermIntent = new Intent(getApplicationContext(), CourseAddActivity.class);
-//                startActivityForResult(addTermIntent, COURSE_ADD_ACTIVITY_REQUEST_CODE);
-//            }
-//        });
+        ExtendedFloatingActionButton addCourseFAB = findViewById(R.id.termDetails_AddCourseFAB);
+        addCourseFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addTermIntent = new Intent(getApplicationContext(), CourseAddActivity.class);
+                startActivityForResult(addTermIntent, COURSE_ADD_ACTIVITY_REQUEST_CODE);
+            }
+        });
 
 
     }
@@ -100,7 +94,6 @@ public class TermDetailsActivity extends AppCompatActivity {
 
         if (requestCode == TERM_EDIT_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Term termToEdit = (Term) data.getSerializableExtra("Term");
-            Log.d(TAG, "onActivityResult: " + termToEdit.toString());
             termViewModel.updateTerm(termToEdit);
             Intent returnTo = new Intent(getApplicationContext(), TermActivity.class);
             startActivity(returnTo);

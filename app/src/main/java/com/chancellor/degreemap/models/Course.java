@@ -1,6 +1,7 @@
 package com.chancellor.degreemap.models;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
@@ -9,6 +10,7 @@ import androidx.room.TypeConverters;
 
 import com.chancellor.degreemap.utilities.DateTypeConverter;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import static androidx.room.ForeignKey.CASCADE;
@@ -20,7 +22,7 @@ import static androidx.room.ForeignKey.CASCADE;
         onDelete = CASCADE,
         onUpdate = CASCADE
 ))
-public class Course {
+public class Course implements Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "course_id")
     private int courseId;
@@ -37,12 +39,10 @@ public class Course {
     private String courseStatus;
     @ColumnInfo(name = "course_notes")
     private String courseNotes;
-    @ColumnInfo(name = "course_alert_date")
-    @TypeConverters(DateTypeConverter.class)
-    private Date courseAlertDate;
-
     @ColumnInfo(name = "term_id_fk")
     private int termIdFk;
+    @Embedded
+    private Mentor mentor;
 
     public int getCourseId() {
         return courseId;
@@ -92,14 +92,6 @@ public class Course {
         this.courseNotes = courseNotes;
     }
 
-    public Date getCourseAlertDate() {
-        return courseAlertDate;
-    }
-
-    public void setCourseAlertDate(Date courseAlertDate) {
-        this.courseAlertDate = courseAlertDate;
-    }
-
     public int getTermIdFk() {
         return termIdFk;
     }
@@ -108,15 +100,11 @@ public class Course {
         this.termIdFk = termIdFk;
     }
 
-    @Override
-    public String toString() {
-        return "Course{" +
-                "courseName='" + courseName + '\'' +
-                ", courseStart=" + courseStart +
-                ", courseEnd=" + courseEnd +
-                ", courseStatus='" + courseStatus + '\'' +
-                ", courseNotes='" + courseNotes + '\'' +
-                ", termId=" + termIdFk +
-                '}';
+    public Mentor getMentor() {
+        return mentor;
+    }
+
+    public void setMentor(Mentor mentorIdFk) {
+        this.mentor = mentorIdFk;
     }
 }

@@ -17,8 +17,6 @@ import com.chancellor.degreemap.views.TermActivity.TermDetailsActivity;
 import java.util.List;
 
 public class TermListAdapter extends RecyclerView.Adapter<TermListAdapter.TermViewHolder> {
-
-    private static final String TAG = "TermListAdapter";
     private final LayoutInflater layoutInflater;
     private final Context context;
     private List<Term> terms;

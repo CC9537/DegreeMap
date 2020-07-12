@@ -9,6 +9,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import com.chancellor.degreemap.R;
+import com.chancellor.degreemap.views.AssessmentActivity.AssessmentActivity;
+import com.chancellor.degreemap.views.CourseActivity.CourseActivity;
+import com.chancellor.degreemap.views.MentorActivity.MentorActivity;
 import com.chancellor.degreemap.views.TermActivity.TermActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.mainToolbar);
         setSupportActionBar(toolbar);
 
-
-        //Button btnTerms = findViewById(R.id.btnTerms);
         CardView cardTerms = findViewById(R.id.main_cardView_terms);
         cardTerms.setOnClickListener((new View.OnClickListener() {
 
@@ -30,6 +31,33 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent termsActivityIntent = new Intent(getApplicationContext(), TermActivity.class);
                 startActivity(termsActivityIntent);
+            }
+        }));
+
+        CardView cardCourses = findViewById(R.id.main_cardView_courses);
+        cardCourses.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent courseActivityIntent = new Intent(getApplicationContext(), CourseActivity.class);
+                startActivity(courseActivityIntent);
+            }
+        }));
+
+        CardView cardAssessments = findViewById(R.id.main_cardView_assessments);
+        cardAssessments.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent assessmentActivityIntent = new Intent(getApplicationContext(), AssessmentActivity.class);
+                startActivity(assessmentActivityIntent);
+            }
+        }));
+
+        CardView cardMentors = findViewById(R.id.main_cardView_mentors);
+        cardMentors.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mentorActivityIntent = new Intent(getApplicationContext(), MentorActivity.class);
+                startActivity(mentorActivityIntent);
             }
         }));
 

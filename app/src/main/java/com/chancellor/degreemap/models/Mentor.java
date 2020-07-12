@@ -2,20 +2,18 @@ package com.chancellor.degreemap.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import static androidx.room.ForeignKey.CASCADE;
+import java.io.Serializable;
 
-@Entity(tableName = "mentors", indices = {@Index("course_id_fk")}, foreignKeys = @ForeignKey(
-        entity = Course.class,
-        parentColumns = "course_id",
-        childColumns = "course_id_fk",
-        onDelete = CASCADE,
-        onUpdate = CASCADE
-))
-public class Mentor {
+@Entity(tableName = "mentors")//, indices = {@Index("course_id_fk")}, foreignKeys = @ForeignKey(
+//        entity = Course.class,
+//        parentColumns = "course_id",
+//        childColumns = "course_id_fk",
+//        onDelete = CASCADE,
+//        onUpdate = CASCADE
+//))
+public class Mentor implements Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "mentor_id")
     private int mentorId;
@@ -25,9 +23,8 @@ public class Mentor {
     private String mentorEmail;
     @ColumnInfo(name = "mentor_phone")
     private String mentorPhone;
-
-    @ColumnInfo(name = "course_id_fk")
-    private int courseIdFk;
+//    @ColumnInfo(name = "course_id_fk")
+//    private int courseIdFk;
 
     public int getMentorId() {
         return mentorId;
@@ -61,11 +58,11 @@ public class Mentor {
         this.mentorPhone = mentorPhone;
     }
 
-    public int getCourseIdFk() {
-        return courseIdFk;
-    }
-
-    public void setCourseIdFk(int courseIdFk) {
-        this.courseIdFk = courseIdFk;
-    }
+//    public int getCourseIdFk() {
+//        return courseIdFk;
+//    }
+//
+//    public void setCourseIdFk(int courseIdFk) {
+//        this.courseIdFk = courseIdFk;
+//    }
 }

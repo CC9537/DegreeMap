@@ -16,14 +16,18 @@ public class AssessmentViewModel extends AndroidViewModel {
 
     private LiveData<List<Assessment>> assessmentList;
 
-    public AssessmentViewModel(@NonNull Application application, int courseId) {
+    public AssessmentViewModel(@NonNull Application application) {
         super(application);
         degreeMapRepository = new DegreeMapRepository(application);
-        assessmentList = degreeMapRepository.getAssessmentsByCourseId(courseId);
+        assessmentList = degreeMapRepository.getAssessmentList();
     }
 
     public LiveData<List<Assessment>> getAssessmentList() {
         return assessmentList;
+    }
+
+    public LiveData<List<Assessment>> getAssessmentsByCourseId(int courseId) {
+        return degreeMapRepository.getAssessmentsByCourseId(courseId);
     }
 
     public void insertAssessment(Assessment assessment) {

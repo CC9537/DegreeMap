@@ -50,6 +50,22 @@ public abstract class DegreeMapDatabase extends RoomDatabase {
                 term1.setTermEnd(DateTypeConverter.toDate("2019-05-31"));
                 termDao.createTerm(term1);
 
+                Mentor mentor1 = new Mentor();
+                mentor1.setMentorId(1);
+                mentor1.setMentorName("Mentor One");
+                mentor1.setMentorEmail("ic_mentor.one@my.wgu.edu");
+                mentor1.setMentorPhone("801-555-1212");
+                //mentor1.setCourseIdFk(1);
+                mentorDao.createMentor(mentor1);
+
+                Mentor mentor2 = new Mentor();
+                mentor2.setMentorId(2);
+                mentor2.setMentorName("Mentor two");
+                mentor2.setMentorEmail("ic_mentor.two@my.wgu.edu");
+                mentor2.setMentorPhone("801-555-2121");
+                //mentor2.setCourseIdFk(2);
+                mentorDao.createMentor(mentor2);
+
                 Course course1 = new Course();
                 course1.setCourseId(1);
                 course1.setCourseName("Orientation – ORA1");
@@ -58,6 +74,7 @@ public abstract class DegreeMapDatabase extends RoomDatabase {
                 course1.setCourseStart(DateTypeConverter.toDate("2018-12-01"));
                 course1.setCourseEnd(DateTypeConverter.toDate("2019-02-30"));
                 course1.setTermIdFk(1);
+                course1.setMentor(mentor1);
                 courseDao.createCourse(course1);
 
                 Course course2 = new Course();
@@ -68,6 +85,7 @@ public abstract class DegreeMapDatabase extends RoomDatabase {
                 course2.setCourseStart(DateTypeConverter.toDate("2019-03-01"));
                 course2.setCourseEnd(DateTypeConverter.toDate("2019-05-31"));
                 course2.setTermIdFk(1);
+                course2.setMentor(mentor2);
                 courseDao.createCourse(course2);
 
                 Assessment assessment1 = new Assessment();
@@ -83,24 +101,16 @@ public abstract class DegreeMapDatabase extends RoomDatabase {
                 assessment2.setAssessmentName("Assessment 2");
                 assessment2.setAssessmentInfo("Assessment 2 Info");
                 assessment2.setAssessmentType("OA");
-                assessment2.setCourseIdFk(2);
+                assessment2.setCourseIdFk(1);
                 assessmentDao.createAssessment(assessment2);
 
-                Mentor mentor1 = new Mentor();
-                mentor1.setMentorId(1);
-                mentor1.setMentorName("Mentor One");
-                mentor1.setMentorEmail("ic_mentor.one@my.wgu.edu");
-                mentor1.setMentorPhone("801-555-1212");
-                mentor1.setCourseIdFk(1);
-                mentorDao.createMentor(mentor1);
-
-                Mentor mentor2 = new Mentor();
-                mentor2.setMentorId(2);
-                mentor2.setMentorName("Mentor two");
-                mentor2.setMentorEmail("ic_mentor.two@my.wgu.edu");
-                mentor2.setMentorPhone("801-555-2121");
-                mentor2.setCourseIdFk(2);
-                mentorDao.createMentor(mentor2);
+                Assessment assessment3 = new Assessment();
+                assessment3.setAssessmentId(3);
+                assessment3.setAssessmentName("Assessment 3");
+                assessment3.setAssessmentInfo("Assessment 3 Info");
+                assessment3.setAssessmentType("OA");
+                assessment3.setCourseIdFk(1);
+                assessmentDao.createAssessment(assessment3);
 
                 Term term2 = new Term();
                 term2.setTermName("June 2019");
@@ -123,6 +133,7 @@ public abstract class DegreeMapDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             DegreeMapDatabase.class, "degree_map_database")
                             .addCallback(populateDatabaseCallback)
+                            .allowMainThreadQueries()
                             .build();
                 }
             }

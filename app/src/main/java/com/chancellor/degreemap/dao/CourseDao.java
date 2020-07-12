@@ -23,6 +23,9 @@ public interface CourseDao {
     @Query("SELECT * FROM courses WHERE term_id_fk = :termId")
     LiveData<List<Course>> getCoursesByTermId(int termId);
 
+//    @Query("SELECT mentor_id_fk FROM courses WHERE course_id = :courseId LIMIT 1;")
+//    int getMentorIdByCourseId(int courseId);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void createCourse(Course course);
 

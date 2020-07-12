@@ -2,7 +2,6 @@ package com.chancellor.degreemap.views.TermActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -21,7 +20,6 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 
 public class TermActivity extends AppCompatActivity {
     private static final int TERM_ADD_ACTIVITY_REQUEST_CODE = 1;
-    private static final String TAG = "TermActivity";
     //Add the ViewModel
     private TermViewModel termViewModel;
 
@@ -56,10 +54,8 @@ public class TermActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult: " + requestCode + " : " + data);
 
         if (requestCode == TERM_ADD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Log.d(TAG, "onActivityResult: In return from addTermActivity");
             Term newTerm = (Term) data.getSerializableExtra("Term");
             termViewModel.insertTerm(newTerm);
         }

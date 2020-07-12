@@ -9,6 +9,7 @@ import androidx.room.TypeConverters;
 
 import com.chancellor.degreemap.utilities.DateTypeConverter;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import static androidx.room.ForeignKey.CASCADE;
@@ -20,7 +21,7 @@ import static androidx.room.ForeignKey.CASCADE;
         onDelete = CASCADE,
         onUpdate = CASCADE
 ))
-public class Assessment {
+public class Assessment implements Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "assessment_id")
     private int assessmentId;
@@ -33,10 +34,6 @@ public class Assessment {
     private String assessmentType;
     @ColumnInfo(name = "assessment_info")
     private String assessmentInfo;
-    @ColumnInfo(name = "assessment_alert_date")
-    @TypeConverters(DateTypeConverter.class)
-    private Date assessmentAlertDate;
-
     @ColumnInfo(name = "course_id_fk")
     private int courseIdFk;
 
@@ -78,14 +75,6 @@ public class Assessment {
 
     public void setAssessmentInfo(String assessmentInfo) {
         this.assessmentInfo = assessmentInfo;
-    }
-
-    public Date getAssessmentAlertDate() {
-        return assessmentAlertDate;
-    }
-
-    public void setAssessmentAlertDate(Date assessmentAlertDate) {
-        this.assessmentAlertDate = assessmentAlertDate;
     }
 
     public int getCourseIdFk() {
