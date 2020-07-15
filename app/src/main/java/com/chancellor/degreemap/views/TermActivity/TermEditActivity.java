@@ -26,7 +26,6 @@ import java.util.Calendar;
 import java.util.List;
 
 public class TermEditActivity extends AppCompatActivity {
-    private static final String TAG = "TermEditActivity";
     TermViewModel termViewModel;
     EditText termName;
     EditText termStartDate;

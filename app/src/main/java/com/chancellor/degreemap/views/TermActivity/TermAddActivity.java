@@ -30,7 +30,6 @@ public class TermAddActivity extends AppCompatActivity {
     EditText termName;
     EditText termStart;
     EditText termEnd;
-    DatePickerDialog.OnDateSetListener setListener;
     Term term = new Term();
 
     @Override
@@ -45,11 +44,6 @@ public class TermAddActivity extends AppCompatActivity {
         termStart = findViewById(R.id.termAdd_TermStartDate);
         termEnd = findViewById(R.id.termAdd_TermEndDate);
 
-        Calendar calendar = Calendar.getInstance();
-        final int year = calendar.get(Calendar.YEAR);
-        final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
-
         final TermListAdapter termListAdapter = new TermListAdapter(this);
         termViewModel = new ViewModelProvider(this).get(TermViewModel.class);
         termViewModel.getTermList().observe(this, new Observer<List<Term>>() {
@@ -58,6 +52,11 @@ public class TermAddActivity extends AppCompatActivity {
                 termListAdapter.setTerms(terms);
             }
         });
+
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         termStart.setOnClickListener(new View.OnClickListener() {
             @Override

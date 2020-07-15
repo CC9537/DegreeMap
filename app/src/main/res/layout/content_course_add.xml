@@ -74,7 +74,7 @@
 
             <AutoCompleteTextView
                 android:id="@+id/courseAdd_MentorDropdownTextView"
-                style="@style/text_editable"
+                style="@style/text_noneditable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
