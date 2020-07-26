@@ -59,4 +59,6 @@
     <string name="assessments">Assessments</string>
     <string name="edit_mentor">Edit Mentor</string>
     <string name="delete_assessment">Delete Assessment</string>
+    <string name="course">Course</string>
+    <string name="term">Term</string>
 </resources>

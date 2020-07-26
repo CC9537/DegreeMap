@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
@@ -13,18 +14,30 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.chancellor.degreemap.R;
 import com.chancellor.degreemap.models.Assessment;
+import com.chancellor.degreemap.models.Course;
 import com.chancellor.degreemap.utilities.DateTypeConverter;
+import com.chancellor.degreemap.viewadapters.CourseListAdapter;
+import com.chancellor.degreemap.viewmodels.CourseViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class AssessmentEditActivity extends AppCompatActivity {
     Assessment assessment;
-    private AutoCompleteTextView dropdownTextView;
+    EditText assessmentName;
+    EditText assessmentDueDate;
+    EditText assessmentType;
+    EditText assessmentNotes;
+    Course course;
+    private AutoCompleteTextView dropdownTextView, dropdownCourses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +47,21 @@ public class AssessmentEditActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        EditText assessmentName = findViewById(R.id.assessmentEdit_AssessmentName);
-        EditText assessmentDueDate = findViewById(R.id.assessmentEdit_AssessmentDueDate);
-        EditText assessmentType = findViewById(R.id.assessmentEdit_TypeDropdownTextView);
-        EditText assessmentNotes = findViewById(R.id.assessmentEdit_AssessmentNotes);
+        assessmentName = findViewById(R.id.assessmentEdit_AssessmentName);
+        assessmentDueDate = findViewById(R.id.assessmentEdit_AssessmentDueDate);
+        assessmentType = findViewById(R.id.assessmentEdit_TypeDropdownTextView);
+        assessmentNotes = findViewById(R.id.assessmentEdit_AssessmentNotes);
+        dropdownCourses = findViewById(R.id.assessmentEdit_CourseDropdownTextView);
 
-        dropdownTextView = findViewById(R.id.assessmentAdd_TypeDropdownTextView);
+        assessment = (Assessment) getIntent().getSerializableExtra("Assessment");
+
+        assessmentName.setText(assessment.getAssessmentName());
+        assessmentDueDate.setText(assessment.getAssessmentDueDate().toString());
+        assessmentType.setText(assessment.getAssessmentType());
+        assessmentNotes.setText(assessment.getAssessmentInfo());
+
+
+        dropdownTextView = findViewById(R.id.assessmentEdit_TypeDropdownTextView);
         String[] dropdownItems = new String[]{
                 "Objective Assessment",
                 "Performance Assessment"
@@ -49,13 +71,34 @@ public class AssessmentEditActivity extends AppCompatActivity {
         );
         dropdownTextView.setAdapter(dropdownAdapter);
 
-        // Set the assessment details to assessment received from intent.
-        assessment = (Assessment) getIntent().getSerializableExtra("Assessment");
+        // Edit courses to course dropdown
+        final CourseListAdapter courseListAdapter = new CourseListAdapter(this);
+        Course[] dropdownCoursesItems = new Course[]{};
+        ArrayList<Course> courseList = new ArrayList<>();
+        ArrayAdapter<Course> dropdownCoursesAdapter = new ArrayAdapter<>(
+                getApplicationContext(), R.layout.dropdown_item, courseList);
 
-        assessmentName.setText(assessment.getAssessmentName());
-        assessmentDueDate.setText(assessment.getAssessmentDueDate().toString());
-        assessmentType.setText(assessment.getAssessmentType());
-        assessmentNotes.setText(assessment.getAssessmentInfo());
+        //Edit the ViewModel
+        CourseViewModel courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
+        courseViewModel.getCourseList()
+                .observe(this, new Observer<List<Course>>() {
+                    @Override
+                    public void onChanged(List<Course> courses) {
+                        for (Course course : courses
+                        ) {
+                            if (course.getCourseId() == assessment.getCourseIdFk())
+                                dropdownCourses.setText(course.getCourseName(), false);
+                            courseList.add(course);
+                        }
+                        dropdownCoursesAdapter.notifyDataSetChanged();
+                        courseListAdapter.setCourses(courses);
+                    }
+                });
+        dropdownCourses.setAdapter(dropdownCoursesAdapter);
+        AssessmentEditActivity.CourseSelected courseSelected = new AssessmentEditActivity.CourseSelected();
+        dropdownCourses.setOnItemSelectedListener(courseSelected);
+        dropdownCourses.setOnItemClickListener(courseSelected);
+
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -69,7 +112,7 @@ public class AssessmentEditActivity extends AppCompatActivity {
                         AssessmentEditActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Month returned is 0 based, so add 1
+                        // Month returned is 0 based, so edit 1
                         month = month + 1;
                         String date = year + "-" +
                                 //Format with leading zero (if needed), no library helper
@@ -95,13 +138,15 @@ public class AssessmentEditActivity extends AppCompatActivity {
                 assessment.setAssessmentType(assessmentType.getText().toString());
                 assessment.setAssessmentInfo(assessmentNotes.getText().toString());
 
+
                 if (assessment.getAssessmentName().isEmpty() ||
                         assessment.getAssessmentDueDate().toString().isEmpty() ||
-                        assessment.getAssessmentInfo().isEmpty())
-                    Snackbar.make(view, "Error! Name, Due Date and Notes can't be blank.",
+                        assessment.getAssessmentInfo().isEmpty() || courseSelected == null)
+                    Snackbar.make(view, "Error! Name, Due Date, Notes and Course can't be blank.",
                             Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 else {
+                    assessment.setCourseIdFk(course.getCourseId());
                     replyIntent.putExtra("Assessment", assessment);
                     setResult(RESULT_OK, replyIntent);
                 }
@@ -112,9 +157,32 @@ public class AssessmentEditActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        Intent assessmentActivityIntent = new Intent(getApplicationContext(), AssessmentActivity.class);
-        startActivity(assessmentActivityIntent);
+        Intent termActivityIntent = new Intent(getApplicationContext(), AssessmentActivity.class);
+        startActivity(termActivityIntent);
         super.onBackPressed();
         return true;
+    }
+
+    class CourseSelected implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener, AdapterView.OnFocusChangeListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            course = (Course) dropdownCourses.getAdapter().getItem(i);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+            course = null;
+        }
+
+        @Override
+        public void onFocusChange(View view, boolean b) {
+
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            course = (Course) dropdownCourses.getAdapter().getItem(i);
+        }
     }
 }

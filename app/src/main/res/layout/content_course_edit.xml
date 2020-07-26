@@ -17,7 +17,6 @@
             android:hint="@string/course_name" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/courseEdit_CourseStartDateLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -43,7 +42,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/courseEdit_DropdownTextLayout"
+        android:id="@+id/courseEdit_StatusDropdownLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,12 +50,46 @@
         app:endIconMode="dropdown_menu">
 
         <AutoCompleteTextView
-            android:id="@+id/courseEdit_DropdownTextView"
+            android:id="@+id/courseEdit_StatusDropdownTextView"
             style="@style/text_noneditable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="-- Select --" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/courseEdit_MentorDropdownLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:hint="@string/mentor"
+            app:endIconMode="dropdown_menu">
+
+            <AutoCompleteTextView
+                android:id="@+id/courseEdit_MentorDropdownTextView"
+                style="@style/text_noneditable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="-- Select --" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/courseEdit_MentorAddButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="0.2"
+            android:text="@string/add" />
+
+    </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/courseEdit_CourseNotesLayout"
@@ -69,15 +102,33 @@
             android:id="@+id/courseEdit_CourseNotes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine" />
+            android:inputType="textMultiLine"
+            android:lines="5" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/courseEdit_TermDropdownLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/term"
+        app:endIconMode="dropdown_menu">
+
+        <AutoCompleteTextView
+            android:id="@+id/courseEdit_TermDropdownTextView"
+            style="@style/text_noneditable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-- Select --" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/termEdit_Save"
+        android:id="@+id/courseEdit_Save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:backgroundTint="@color/wguGreen"
-        android:text="@string/save_course" />
+        android:text="@string/edit_course" />
 
 </LinearLayout>

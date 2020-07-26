@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
@@ -35,6 +36,7 @@ public class AssessmentAddActivity extends AppCompatActivity {
     EditText assessmentDueDate;
     EditText assessmentType;
     EditText assessmentNotes;
+    Course course;
     private AutoCompleteTextView dropdownTextView, dropdownCourses;
 
     @Override
@@ -63,9 +65,9 @@ public class AssessmentAddActivity extends AppCompatActivity {
         // Add courses to course dropdown
         dropdownCourses = findViewById(R.id.assessmentAdd_CourseDropdownTextView);
         final CourseListAdapter courseListAdapter = new CourseListAdapter(this);
-        String[] dropdownCoursesItems = new String[]{};
-        ArrayList<String> courseList = new ArrayList<>();
-        ArrayAdapter<String> dropdownCoursesAdapter = new ArrayAdapter<>(
+        Course[] dropdownCoursesItems = new Course[]{};
+        ArrayList<Course> courseList = new ArrayList<>();
+        ArrayAdapter<Course> dropdownCoursesAdapter = new ArrayAdapter<>(
                 getApplicationContext(), R.layout.dropdown_item, courseList);
 
         //Add the ViewModel
@@ -76,13 +78,17 @@ public class AssessmentAddActivity extends AppCompatActivity {
                     public void onChanged(List<Course> courses) {
                         for (Course course : courses
                         ) {
-                            courseList.add(course.getCourseName());
+                            courseList.add(course);
                         }
                         dropdownCoursesAdapter.notifyDataSetChanged();
                         courseListAdapter.setCourses(courses);
                     }
                 });
         dropdownCourses.setAdapter(dropdownCoursesAdapter);
+        CourseSelected courseSelected = new CourseSelected();
+        dropdownCourses.setOnItemSelectedListener(courseSelected);
+        dropdownCourses.setOnItemClickListener(courseSelected);
+
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -122,17 +128,17 @@ public class AssessmentAddActivity extends AppCompatActivity {
                 assessment.setAssessmentType(assessmentType.getText().toString());
                 assessment.setAssessmentInfo(assessmentNotes.getText().toString());
 
-                String courseName = dropdownCourses.getText().toString();
 
                 if (assessment.getAssessmentName().isEmpty() ||
                         assessment.getAssessmentDueDate().toString().isEmpty() ||
-                        assessment.getAssessmentInfo().isEmpty())
-                    Snackbar.make(view, "Error! Name, Due Date and Notes can't be blank.",
+                        assessment.getAssessmentInfo().isEmpty() || courseSelected == null)
+                    Snackbar.make(view, "Error! Name, Due Date, Notes and Course can't be blank.",
                             Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 else {
+                    assessment.setCourseIdFk(course.getCourseId());
                     replyIntent.putExtra("Assessment", assessment);
-                    replyIntent.putExtra("CourseName", courseName);
+                    // replyIntent.putExtra("CourseName", courseName);
                     setResult(RESULT_OK, replyIntent);
                 }
                 finish();
@@ -146,5 +152,23 @@ public class AssessmentAddActivity extends AppCompatActivity {
         startActivity(termActivityIntent);
         super.onBackPressed();
         return true;
+    }
+
+    class CourseSelected implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            course = (Course) dropdownCourses.getAdapter().getItem(i);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+            course = null;
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            course = (Course) dropdownCourses.getAdapter().getItem(i);
+        }
     }
 }

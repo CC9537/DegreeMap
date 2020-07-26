@@ -17,7 +17,6 @@
             android:hint="@string/course_name" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/courseAdd_CourseStartDateLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -52,7 +51,7 @@
 
         <AutoCompleteTextView
             android:id="@+id/courseAdd_StatusDropdownTextView"
-            style="@style/text_editable"
+            style="@style/text_noneditable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="-- Select --" />
@@ -83,6 +82,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+            android:id="@+id/courseAdd_MentorAddButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -106,6 +106,22 @@
             android:lines="5" />
     </com.google.android.material.textfield.TextInputLayout>
 
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/courseAdd_TermDropdownLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/term"
+        app:endIconMode="dropdown_menu">
+
+        <AutoCompleteTextView
+            android:id="@+id/courseAdd_TermDropdownTextView"
+            style="@style/text_noneditable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-- Select --" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/courseAdd_Save"

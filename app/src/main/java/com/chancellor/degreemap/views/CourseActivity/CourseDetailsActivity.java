@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -176,6 +177,18 @@ public class CourseDetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == COURSE_EDIT_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            Course courseToEdit = (Course) data.getSerializableExtra("Course");
+            courseViewModel.updateCourse(courseToEdit);
+            Intent returnTo = new Intent(getApplicationContext(), CourseActivity.class);
+            startActivity(returnTo);
+        }
+
+    }
 
     @Override
     public boolean onSupportNavigateUp() {

@@ -109,21 +109,20 @@ public class TermAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent replyIntent = new Intent();
-                term.setTermName(termName.getText().toString());
-                term.setTermStart(DateTypeConverter.toDate(termStart.getText().toString()));
-                term.setTermEnd(DateTypeConverter.toDate(termEnd.getText().toString()));
 
-
-                if (term.getTermName().isEmpty() ||
-                        term.getTermStart().toString().isEmpty() ||
-                        term.getTermEnd().toString().isEmpty())
+                if (termName.getText().toString().isEmpty() ||
+                        termStart.getText().toString().isEmpty() ||
+                        termEnd.getText().toString().isEmpty())
                     Snackbar.make(view, "Error! Name, Start and End Date can't be blank.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 else {
+                    term.setTermName(termName.getText().toString());
+                    term.setTermStart(DateTypeConverter.toDate(termStart.getText().toString()));
+                    term.setTermEnd(DateTypeConverter.toDate(termEnd.getText().toString()));
                     replyIntent.putExtra("Term", term);
                     setResult(RESULT_OK, replyIntent);
+                    finish();
                 }
-                finish();
             }
         });
     }

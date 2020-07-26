@@ -40,7 +40,7 @@
 
         <AutoCompleteTextView
             android:id="@+id/assessmentEdit_TypeDropdownTextView"
-            style="@style/text_editable"
+            style="@style/text_noneditable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="-- Select --" />
@@ -59,6 +59,24 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:lines="5" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/assessmentEdit_CourseDropdownLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/course"
+        app:endIconMode="dropdown_menu">
+
+        <AutoCompleteTextView
+            android:id="@+id/assessmentEdit_CourseDropdownTextView"
+            style="@style/text_noneditable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="-- Select --" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton

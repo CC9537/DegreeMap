@@ -53,12 +53,14 @@ public class AssessmentActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+
 
         if (requestCode == ASSESSMENT_ADD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Assessment newAssessment = (Assessment) data.getSerializableExtra("Assessment");
             assessmentViewModel.insertAssessment(newAssessment);
         }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

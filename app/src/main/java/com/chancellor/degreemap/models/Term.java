@@ -62,11 +62,6 @@ public class Term implements Serializable {
 
     @Override
     public String toString() {
-        return "Term{" +
-                "termId=" + termId +
-                ", termName='" + termName + '\'' +
-                ", termStart=" + termStart +
-                ", termEnd=" + termEnd +
-                '}';
+        return termName;
     }
 }

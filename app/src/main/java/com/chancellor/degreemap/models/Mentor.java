@@ -6,13 +6,7 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "mentors")//, indices = {@Index("course_id_fk")}, foreignKeys = @ForeignKey(
-//        entity = Course.class,
-//        parentColumns = "course_id",
-//        childColumns = "course_id_fk",
-//        onDelete = CASCADE,
-//        onUpdate = CASCADE
-//))
+@Entity(tableName = "mentors")
 public class Mentor implements Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "mentor_id")
@@ -23,8 +17,6 @@ public class Mentor implements Serializable {
     private String mentorEmail;
     @ColumnInfo(name = "mentor_phone")
     private String mentorPhone;
-//    @ColumnInfo(name = "course_id_fk")
-//    private int courseIdFk;
 
     public int getMentorId() {
         return mentorId;
@@ -58,11 +50,8 @@ public class Mentor implements Serializable {
         this.mentorPhone = mentorPhone;
     }
 
-//    public int getCourseIdFk() {
-//        return courseIdFk;
-//    }
-//
-//    public void setCourseIdFk(int courseIdFk) {
-//        this.courseIdFk = courseIdFk;
-//    }
+    @Override
+    public String toString() {
+        return mentorName;
+    }
 }

@@ -81,6 +81,7 @@ public class TermDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent addTermIntent = new Intent(getApplicationContext(), CourseAddActivity.class);
+                addTermIntent.putExtra("Term", term);
                 startActivityForResult(addTermIntent, COURSE_ADD_ACTIVITY_REQUEST_CODE);
             }
         });

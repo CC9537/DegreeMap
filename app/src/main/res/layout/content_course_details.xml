@@ -102,15 +102,16 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/courseDetails_CourseNotes"
+            style="@style/text_noneditable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
-            android:lines="5" />
+            android:lines="3" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="177dp">
+        android:layout_height="140dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/courseDetails_AssessmentRecyclerView"

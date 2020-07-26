@@ -107,4 +107,9 @@ public class Course implements Serializable {
     public void setMentor(Mentor mentorIdFk) {
         this.mentor = mentorIdFk;
     }
+
+    @Override
+    public String toString() {
+        return courseName;
+    }
 }
