@@ -36,7 +36,7 @@ public class AssessmentEditActivity extends AppCompatActivity {
     EditText assessmentDueDate;
     EditText assessmentType;
     EditText assessmentNotes;
-    Course course;
+    Course courseForAssessment;
     private AutoCompleteTextView dropdownTextView, dropdownCourses;
 
     @Override
@@ -86,8 +86,10 @@ public class AssessmentEditActivity extends AppCompatActivity {
                     public void onChanged(List<Course> courses) {
                         for (Course course : courses
                         ) {
-                            if (course.getCourseId() == assessment.getCourseIdFk())
+                            if (course.getCourseId() == assessment.getCourseIdFk()) {
                                 dropdownCourses.setText(course.getCourseName(), false);
+                                courseForAssessment = course;
+                            }
                             courseList.add(course);
                         }
                         dropdownCoursesAdapter.notifyDataSetChanged();
@@ -133,24 +135,24 @@ public class AssessmentEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent replyIntent = new Intent();
-                assessment.setAssessmentName(assessmentName.getText().toString());
-                assessment.setAssessmentDueDate(DateTypeConverter.toDate(assessmentDueDate.getText().toString()));
-                assessment.setAssessmentType(assessmentType.getText().toString());
-                assessment.setAssessmentInfo(assessmentNotes.getText().toString());
 
-
-                if (assessment.getAssessmentName().isEmpty() ||
-                        assessment.getAssessmentDueDate().toString().isEmpty() ||
-                        assessment.getAssessmentInfo().isEmpty() || courseSelected == null)
+                if (assessmentName.getText().toString().isEmpty() ||
+                        assessmentDueDate.getText().toString().isEmpty() ||
+                        assessmentNotes.getText().toString().isEmpty() || courseSelected == null)
                     Snackbar.make(view, "Error! Name, Due Date, Notes and Course can't be blank.",
                             Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 else {
-                    assessment.setCourseIdFk(course.getCourseId());
+                    assessment.setAssessmentName(assessmentName.getText().toString());
+                    assessment.setAssessmentDueDate(DateTypeConverter.toDate(assessmentDueDate.getText().toString()));
+                    assessment.setAssessmentType(assessmentType.getText().toString());
+                    assessment.setAssessmentInfo(assessmentNotes.getText().toString());
+                    assessment.setCourseIdFk(courseForAssessment.getCourseId());
                     replyIntent.putExtra("Assessment", assessment);
+                    // replyIntent.putExtra("CourseName", courseName);
                     setResult(RESULT_OK, replyIntent);
+                    finish();
                 }
-                finish();
             }
         });
     }
@@ -167,12 +169,12 @@ public class AssessmentEditActivity extends AppCompatActivity {
 
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            course = (Course) dropdownCourses.getAdapter().getItem(i);
+            courseForAssessment = (Course) dropdownCourses.getAdapter().getItem(i);
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
-            course = null;
+            courseForAssessment = null;
         }
 
         @Override
@@ -182,7 +184,7 @@ public class AssessmentEditActivity extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            course = (Course) dropdownCourses.getAdapter().getItem(i);
+            courseForAssessment = (Course) dropdownCourses.getAdapter().getItem(i);
         }
     }
 }

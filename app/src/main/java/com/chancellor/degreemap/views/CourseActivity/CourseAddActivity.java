@@ -193,29 +193,28 @@ public class CourseAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent replyIntent = new Intent();
-                course.setCourseName(courseName.getText().toString());
-                course.setCourseStart(DateTypeConverter.toDate(courseStartDate.getText().toString()));
-                course.setCourseEnd(DateTypeConverter.toDate(courseEndDate.getText().toString()));
-                course.setCourseStatus(dropdownTextView.getText().toString());
-                course.setCourseNotes(courseNotes.getText().toString());
 
-                if (course.getCourseName().isEmpty() ||
-                        course.getCourseStart().toString().isEmpty() ||
-                        course.getCourseEnd().toString().isEmpty() ||
-                        course.getCourseNotes().isEmpty() ||
-                        course.getCourseStatus().isEmpty() ||
+                if (courseName.getText().toString().isEmpty() ||
+                        courseStartDate.getText().toString().isEmpty() ||
+                        courseEndDate.getText().toString().isEmpty() ||
+                        courseNotes.getText().toString().isEmpty() ||
+                        dropdownTextView.getText().toString().equals("-- Select --") ||
                         termForCourse == null || mentorForCourse == null)
                     Snackbar.make(view, "Error! All fields requires. Can't be blank.",
                             Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 else {
+                    course.setCourseName(courseName.getText().toString());
+                    course.setCourseStart(DateTypeConverter.toDate(courseStartDate.getText().toString()));
+                    course.setCourseEnd(DateTypeConverter.toDate(courseEndDate.getText().toString()));
+                    course.setCourseStatus(dropdownTextView.getText().toString());
+                    course.setCourseNotes(courseNotes.getText().toString());
                     course.setMentor(mentorForCourse);
                     course.setTermIdFk(termForCourse.getTermId());
                     replyIntent.putExtra("Course", course);
-                    // replyIntent.putExtra("CourseName", courseName);
                     setResult(RESULT_OK, replyIntent);
+                    finish();
                 }
-                finish();
             }
         });
 

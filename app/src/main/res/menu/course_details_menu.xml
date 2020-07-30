@@ -10,4 +10,21 @@
         android:icon="@drawable/ic_delete"
         android:title="@string/delete_course"
         app:showAsAction="always"/>
+
+    <item android:id="@+id/courseDetails_Share"
+    android:title="@string/share_notes"
+    android:icon="@drawable/ic_share"
+    app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/courseDetails_AlertStart"
+        android:title="Set Alert Start Date"
+        android:icon="@drawable/ic_alert"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/courseDetails_AlertEnd"
+        android:title="Set Alert End Date"
+        android:icon="@drawable/ic_alert"
+        app:showAsAction="never"/>
+
+
 </menu>

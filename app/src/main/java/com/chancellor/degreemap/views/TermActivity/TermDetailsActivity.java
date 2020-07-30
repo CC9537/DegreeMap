@@ -37,6 +37,7 @@ public class TermDetailsActivity extends AppCompatActivity {
     TermViewModel termViewModel;
     int numCoursesAssignedThisTerm = 0;
     Term term;
+    private CourseViewModel courseViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class TermDetailsActivity extends AppCompatActivity {
 
         termViewModel = new ViewModelProvider(this).get(TermViewModel.class);
 
+        courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
 
         RecyclerView termDetailsCourseRecyclerView = findViewById(R.id.termDetails_CourseRecyclerView);
         final CourseListAdapter courseListAdapter = new CourseListAdapter(this);
@@ -98,6 +100,11 @@ public class TermDetailsActivity extends AppCompatActivity {
             termViewModel.updateTerm(termToEdit);
             Intent returnTo = new Intent(getApplicationContext(), TermActivity.class);
             startActivity(returnTo);
+        }
+
+        if (requestCode == COURSE_ADD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            Course newCourse = (Course) data.getSerializableExtra("Course");
+            courseViewModel.insertCourse(newCourse);
         }
 
     }

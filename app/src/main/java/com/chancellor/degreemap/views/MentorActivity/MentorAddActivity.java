@@ -36,21 +36,21 @@ public class MentorAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent replyIntent = new Intent();
-                mentor.setMentorName(mentorName.getText().toString());
-                mentor.setMentorPhone(mentorPhone.getText().toString());
-                mentor.setMentorEmail(mentorEmail.getText().toString());
 
-                if (mentor.getMentorName().isEmpty() ||
-                        mentor.getMentorPhone().isEmpty() ||
-                        mentor.getMentorEmail().isEmpty())
+                if (mentorName.getText().toString().isEmpty() ||
+                        mentorPhone.getText().toString().isEmpty() ||
+                        mentorEmail.getText().toString().isEmpty())
                     Snackbar.make(view, "Error! Name, Phone and Email can't be blank.",
                             Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 else {
+                    mentor.setMentorName(mentorName.getText().toString());
+                    mentor.setMentorPhone(mentorPhone.getText().toString());
+                    mentor.setMentorEmail(mentorEmail.getText().toString());
                     replyIntent.putExtra("Mentor", mentor);
                     setResult(RESULT_OK, replyIntent);
+                    finish();
                 }
-                finish();
             }
         });
     }

@@ -39,7 +39,13 @@ public interface iDegreeMapRepository {
 
     LiveData<List<Course>> getCoursesByTermId(int termId);
 
-    //LiveData<Mentor> getMentorByCourseId(int courseId);
+    int countCourses();
+
+    int countCoursesPending();
+
+    int countCoursesInProgress();
+
+    int countCoursesComplete();
 
     //Assessment CRUD
     void createAssessment(Assessment assessment);

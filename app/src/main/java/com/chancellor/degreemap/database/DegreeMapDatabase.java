@@ -53,17 +53,15 @@ public abstract class DegreeMapDatabase extends RoomDatabase {
                 Mentor mentor1 = new Mentor();
                 mentor1.setMentorId(1);
                 mentor1.setMentorName("Mentor One");
-                mentor1.setMentorEmail("ic_mentor.one@my.wgu.edu");
+                mentor1.setMentorEmail("mentor.one@my.wgu.edu");
                 mentor1.setMentorPhone("801-555-1212");
-                //mentor1.setCourseIdFk(1);
                 mentorDao.createMentor(mentor1);
 
                 Mentor mentor2 = new Mentor();
                 mentor2.setMentorId(2);
                 mentor2.setMentorName("Mentor two");
-                mentor2.setMentorEmail("ic_mentor.two@my.wgu.edu");
+                mentor2.setMentorEmail("mentor.two@my.wgu.edu");
                 mentor2.setMentorPhone("801-555-2121");
-                //mentor2.setCourseIdFk(2);
                 mentorDao.createMentor(mentor2);
 
                 Course course1 = new Course();
@@ -92,7 +90,8 @@ public abstract class DegreeMapDatabase extends RoomDatabase {
                 assessment1.setAssessmentId(1);
                 assessment1.setAssessmentName("Assessment 1");
                 assessment1.setAssessmentInfo("Assessment 1 Info");
-                assessment1.setAssessmentType("OA");
+                assessment1.setAssessmentType("Objective Assessment");
+                assessment1.setAssessmentDueDate(DateTypeConverter.toDate("2019-03-25"));
                 assessment1.setCourseIdFk(1);
                 assessmentDao.createAssessment(assessment1);
 
@@ -100,7 +99,8 @@ public abstract class DegreeMapDatabase extends RoomDatabase {
                 assessment2.setAssessmentId(2);
                 assessment2.setAssessmentName("Assessment 2");
                 assessment2.setAssessmentInfo("Assessment 2 Info");
-                assessment2.setAssessmentType("OA");
+                assessment2.setAssessmentType("Performance Assessment");
+                assessment2.setAssessmentDueDate(DateTypeConverter.toDate("2019-04-25"));
                 assessment2.setCourseIdFk(1);
                 assessmentDao.createAssessment(assessment2);
 
@@ -108,7 +108,8 @@ public abstract class DegreeMapDatabase extends RoomDatabase {
                 assessment3.setAssessmentId(3);
                 assessment3.setAssessmentName("Assessment 3");
                 assessment3.setAssessmentInfo("Assessment 3 Info");
-                assessment3.setAssessmentType("OA");
+                assessment3.setAssessmentType("Objective Assessment");
+                assessment3.setAssessmentDueDate(DateTypeConverter.toDate("2019-05-25"));
                 assessment3.setCourseIdFk(1);
                 assessmentDao.createAssessment(assessment3);
 

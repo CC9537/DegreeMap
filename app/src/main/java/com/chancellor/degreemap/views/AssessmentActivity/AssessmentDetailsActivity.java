@@ -1,6 +1,9 @@
 package com.chancellor.degreemap.views.AssessmentActivity;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,11 +23,15 @@ import androidx.lifecycle.ViewModelProvider;
 import com.chancellor.degreemap.R;
 import com.chancellor.degreemap.models.Assessment;
 import com.chancellor.degreemap.models.Course;
+import com.chancellor.degreemap.utilities.AlertReceiver;
+import com.chancellor.degreemap.utilities.DateTypeConverter;
 import com.chancellor.degreemap.viewadapters.CourseListAdapter;
 import com.chancellor.degreemap.viewmodels.AssessmentViewModel;
 import com.chancellor.degreemap.viewmodels.CourseViewModel;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AssessmentDetailsActivity extends AppCompatActivity {
@@ -32,6 +39,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
     AssessmentViewModel assessmentViewModel;
     Assessment assessment;
     Course course;
+    EditText assessmentDueDate;
     private AutoCompleteTextView dropdownTextView, dropdownCourses;
 
 
@@ -49,7 +57,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
         assessment = (Assessment) getIntent().getSerializableExtra("Assessment");
 
         EditText assessmentName = findViewById(R.id.assessmentDetails_AssessmentName);
-        EditText assessmentDueDate = findViewById(R.id.assessmentDetails_AssessmentDueDate);
+        assessmentDueDate = findViewById(R.id.assessmentDetails_AssessmentDueDate);
         EditText assessmentType = findViewById(R.id.assessmentDetails_TypeDropdownTextView);
         EditText assessmentNotes = findViewById(R.id.assessmentDetails_AssessmentNotes);
         AutoCompleteTextView dropdownCourses = findViewById(R.id.assessmentDetails_CourseDropdownTextView);
@@ -119,11 +127,28 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
                         startActivity(returnTo);
                     }
                 };
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(AssessmentDetailsActivity.this);
                 builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
                         .setNegativeButton("No", dialogClickListener).show();
                 return true;
+            case R.id.assessmentDetails_AlertDue:
+                Date alertDateDue = DateTypeConverter.toDate(assessmentDueDate.getText().toString());
+                Calendar calendarDue = Calendar.getInstance();
+                calendarDue.setTime(alertDateDue);
+
+                Intent notificationIntentDue = new Intent(getApplicationContext(), AlertReceiver.class);
+                notificationIntentDue.putExtra("title", assessment.getAssessmentName());
+                notificationIntentDue.putExtra("type", "assessment");
+                notificationIntentDue.putExtra("status", "due");
+                notificationIntentDue.putExtra("notification_id", assessment.getAssessmentId() + 3000);
+
+                long timeFromCalendarInMillis = calendarDue.getTimeInMillis();
+
+                PendingIntent senderEnd = PendingIntent.getBroadcast(getApplicationContext(), assessment.getAssessmentId() + 3000, notificationIntentDue, 0);
+                AlarmManager alarmManagerEnd = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManagerEnd.set(AlarmManager.RTC_WAKEUP, timeFromCalendarInMillis, senderEnd);
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
     }

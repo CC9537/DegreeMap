@@ -9,10 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver
+            android:name=".utilities.AlertReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
         <activity
             android:name=".views.MentorActivity.MentorEditActivity"
             android:label="@string/title_activity_mentor_edit"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".views.MentorActivity.MentorDetailsActivity"
             android:label="@string/title_activity_mentor_details"

@@ -10,4 +10,9 @@
         android:icon="@drawable/ic_delete"
         android:title="@string/delete_assessment"
         app:showAsAction="always"/>
+
+    <item android:id="@+id/assessmentDetails_AlertDue"
+        android:title="Set Due Date Reminder"
+        android:icon="@drawable/ic_alert"
+        app:showAsAction="never"/>
 </menu>

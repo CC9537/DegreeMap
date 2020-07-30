@@ -12,7 +12,6 @@ import com.chancellor.degreemap.models.Term;
 import java.util.List;
 
 public class TermViewModel extends AndroidViewModel {
-    private static final String TAG = "TermViewModel";
     private DegreeMapRepository degreeMapRepository;
 
     private LiveData<List<Term>> termList;

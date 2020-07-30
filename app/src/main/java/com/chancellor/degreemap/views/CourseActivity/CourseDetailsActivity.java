@@ -1,6 +1,9 @@
 package com.chancellor.degreemap.views.CourseActivity;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,11 +26,15 @@ import com.chancellor.degreemap.database.DegreeMapRepository;
 import com.chancellor.degreemap.models.Assessment;
 import com.chancellor.degreemap.models.Course;
 import com.chancellor.degreemap.models.Mentor;
+import com.chancellor.degreemap.utilities.AlertReceiver;
+import com.chancellor.degreemap.utilities.DateTypeConverter;
 import com.chancellor.degreemap.viewadapters.AssessmentListAdapter;
 import com.chancellor.degreemap.viewmodels.AssessmentViewModel;
 import com.chancellor.degreemap.viewmodels.CourseViewModel;
 import com.chancellor.degreemap.views.TermActivity.TermActivity;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class CourseDetailsActivity extends AppCompatActivity {
@@ -35,8 +42,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
     CourseViewModel courseViewModel;
     Course course;
     Mentor mentorForCourse;
+    EditText courseNotes, courseName, courseStartDate, courseEndDate;
     private DegreeMapRepository degreeMapRepository;
-//    private TextView statusTextView, mentorNameTextView, mentorPhoneTextView, mentorEmailTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,57 +56,13 @@ public class CourseDetailsActivity extends AppCompatActivity {
         degreeMapRepository = new DegreeMapRepository(getApplication());
 
 
-//        String[] dropdownItems = new String[]{
-//                "Pending",
-//                "In Progress",
-//                "Complete"
-//        };
-//        ArrayAdapter<String> dropdownAdapter = new ArrayAdapter<>(
-//                getApplicationContext(), R.layout.dropdown_item, dropdownItems
-//        );
-//        dropdownTextView.setAdapter(dropdownAdapter);
-
-        // Add mentors to mentor dropdown
-
-//        final MentorListAdapter mentorListAdapter = new MentorListAdapter(this);
-//        String[] dropdownMentorsItems = new String[]{};
-//        ArrayList<String> mentorList = new ArrayList<>();
-//        ArrayAdapter<String> dropdownMentorsAdapter = new ArrayAdapter<>(
-//                getApplicationContext(), R.layout.dropdown_item, mentorList);
-//
-//
-//        //Add the ViewModel
-//        MentorViewModel mentorViewModel = new ViewModelProvider(this).get(MentorViewModel.class);
-//        mentorViewModel.getMentorList()
-//                .observe(this, new Observer<List<Mentor>>() {
-//                    @Override
-//                    public void onChanged(List<Mentor> mentors) {
-//                        for (Mentor mentor : mentors
-//                        ) {
-//                            mentorList.add(mentor.getMentorName());
-//                        }
-//                        dropdownMentorsAdapter.notifyDataSetChanged();
-//                        mentorListAdapter.setMentors(mentors);
-//                    }
-//                });
-//        mentorNameTextView, mentorPhoneTextView, mentorEmailTextView.setAdapter(dropdownMentorsAdapter);
-
-        // Set the course details to the course received from intent
         course = (Course) getIntent().getSerializableExtra("Course");
-        //   mentorForCourse = mentorViewModel.getMentorForCourse(course.getCourseId()).getValue();
-//                .observe(this, new Observer<Mentor>() {
-//                    @Override
-//                    public void onChanged(Mentor mentor) {
-//                        mentorForCourse = mentor;
-//                    }
-//                });
 
-        EditText courseName = findViewById(R.id.courseDetails_CourseName);
-        EditText courseStartDate = findViewById(R.id.courseDetails_CourseStartDate);
-        EditText courseEndDate = findViewById(R.id.courseDetails_CourseEndDate);
-//        AutoCompleteTextView courseStatus = findViewById(R.id.courseDetails_StatusTextView);
-//        AutoCompleteTextView courseMentor = findViewById(R.id.courseDetails_MentorDropdownTextView);
-        EditText courseNotes = findViewById(R.id.courseDetails_CourseNotes);
+
+        courseName = findViewById(R.id.courseDetails_CourseName);
+        courseStartDate = findViewById(R.id.courseDetails_CourseStartDate);
+        courseEndDate = findViewById(R.id.courseDetails_CourseEndDate);
+        courseNotes = findViewById(R.id.courseDetails_CourseNotes);
         TextView statusTextView = findViewById(R.id.courseDetails_StatusTextView);
         TextView mentorNameTextView = findViewById(R.id.courseDetails_MentorNameTextView);
         TextView mentorPhoneTextView = findViewById(R.id.courseDetails_MentorPhoneTextView);
@@ -147,11 +110,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 editCourseIntent.putExtra("Course", course);
                 startActivityForResult(editCourseIntent, COURSE_EDIT_ACTIVITY_REQUEST_CODE);
                 return true;
-            case R.id.termDetails_DeleteTermMenu:
-//                if (numCoursesAssignedThisTerm > 0)
-//                    Snackbar.make(getWindow().getDecorView(), "Error! Can't delete term when courses exist.", Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
-//                else {
+            case R.id.courseDetails_DeleteCourseMenu:
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -171,8 +130,49 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CourseDetailsActivity.this);
                 builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
                         .setNegativeButton("No", dialogClickListener).show();
-//                }
                 return true;
+            case R.id.courseDetails_Share:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, courseNotes.getText().toString());
+                sendIntent.putExtra(Intent.EXTRA_TITLE, "Notes from " + courseName.getText().toString());
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
+                return true;
+            case R.id.courseDetails_AlertStart:
+                Date alertDateStart = DateTypeConverter.toDate(courseStartDate.getText().toString());
+                Calendar calendarStart = Calendar.getInstance();
+                calendarStart.setTime(alertDateStart);
+
+                Intent notificationIntentStart = new Intent(getApplicationContext(), AlertReceiver.class);
+                notificationIntentStart.putExtra("title", course.getCourseName());
+                notificationIntentStart.putExtra("type", "course");
+                notificationIntentStart.putExtra("status", "starting");
+                notificationIntentStart.putExtra("notification_id", course.getCourseId() + 1000);
+
+                PendingIntent senderStart = PendingIntent.getBroadcast(getApplicationContext(), course.getCourseId() + 1000, notificationIntentStart, 0);
+                AlarmManager alarmManagerStart = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManagerStart.set(AlarmManager.RTC_WAKEUP, calendarStart.getTimeInMillis(), senderStart);
+                return true;
+            case R.id.courseDetails_AlertEnd:
+                Date alertDateEnd = DateTypeConverter.toDate(courseEndDate.getText().toString());
+                Calendar calendarEnd = Calendar.getInstance();
+                calendarEnd.setTime(alertDateEnd);
+
+                Intent notificationIntentEnd = new Intent(getApplicationContext(), AlertReceiver.class);
+                notificationIntentEnd.putExtra("title", course.getCourseName());
+                notificationIntentEnd.putExtra("type", "course");
+                notificationIntentEnd.putExtra("status", "ending");
+                notificationIntentEnd.putExtra("notification_id", course.getCourseId() + 2000);
+
+                PendingIntent senderEnd = PendingIntent.getBroadcast(getApplicationContext(), course.getCourseId() + 2000, notificationIntentEnd, 0);
+                AlarmManager alarmManagerEnd = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManagerEnd.set(AlarmManager.RTC_WAKEUP, calendarEnd.getTimeInMillis(), senderEnd);
+                return true;
+
+
         }
         return super.onOptionsItemSelected(item);
     }

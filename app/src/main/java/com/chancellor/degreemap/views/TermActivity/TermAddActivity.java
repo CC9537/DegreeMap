@@ -28,8 +28,8 @@ import java.util.List;
 public class TermAddActivity extends AppCompatActivity {
     TermViewModel termViewModel;
     EditText termName;
-    EditText termStart;
-    EditText termEnd;
+    EditText termStartDate;
+    EditText termEndDate;
     Term term = new Term();
 
     @Override
@@ -41,8 +41,8 @@ public class TermAddActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         termName = findViewById(R.id.termAdd_TermName);
-        termStart = findViewById(R.id.termAdd_TermStartDate);
-        termEnd = findViewById(R.id.termAdd_TermEndDate);
+        termStartDate = findViewById(R.id.termAdd_TermStartDate);
+        termEndDate = findViewById(R.id.termAdd_TermEndDate);
 
         final TermListAdapter termListAdapter = new TermListAdapter(this);
         termViewModel = new ViewModelProvider(this).get(TermViewModel.class);
@@ -58,7 +58,7 @@ public class TermAddActivity extends AppCompatActivity {
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        termStart.setOnClickListener(new View.OnClickListener() {
+        termStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -73,7 +73,7 @@ public class TermAddActivity extends AppCompatActivity {
                                 + "-" +
                                 //Format with leading zero (if needed), no library helper
                                 ("00" + String.valueOf(dayOfMonth)).substring(String.valueOf(dayOfMonth).length());
-                        termStart.setText(date);
+                        termStartDate.setText(date);
                     }
                 }, year, month, day);
                 datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
@@ -81,7 +81,7 @@ public class TermAddActivity extends AppCompatActivity {
             }
         });
 
-        termEnd.setOnClickListener(new View.OnClickListener() {
+        termEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -96,7 +96,7 @@ public class TermAddActivity extends AppCompatActivity {
                                 + "-" +
                                 //Format with leading zero (if needed), no library helper
                                 ("00" + String.valueOf(dayOfMonth)).substring(String.valueOf(dayOfMonth).length());
-                        termEnd.setText(date);
+                        termEndDate.setText(date);
                     }
                 }, year, month, day);
                 datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
@@ -111,14 +111,14 @@ public class TermAddActivity extends AppCompatActivity {
                 Intent replyIntent = new Intent();
 
                 if (termName.getText().toString().isEmpty() ||
-                        termStart.getText().toString().isEmpty() ||
-                        termEnd.getText().toString().isEmpty())
+                        termStartDate.getText().toString().isEmpty() ||
+                        termEndDate.getText().toString().isEmpty())
                     Snackbar.make(view, "Error! Name, Start and End Date can't be blank.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 else {
                     term.setTermName(termName.getText().toString());
-                    term.setTermStart(DateTypeConverter.toDate(termStart.getText().toString()));
-                    term.setTermEnd(DateTypeConverter.toDate(termEnd.getText().toString()));
+                    term.setTermStart(DateTypeConverter.toDate(termStartDate.getText().toString()));
+                    term.setTermEnd(DateTypeConverter.toDate(termEndDate.getText().toString()));
                     replyIntent.putExtra("Term", term);
                     setResult(RESULT_OK, replyIntent);
                     finish();

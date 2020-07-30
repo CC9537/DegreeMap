@@ -123,25 +123,24 @@ public class AssessmentAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent replyIntent = new Intent();
-                assessment.setAssessmentName(assessmentName.getText().toString());
-                assessment.setAssessmentDueDate(DateTypeConverter.toDate(assessmentDueDate.getText().toString()));
-                assessment.setAssessmentType(assessmentType.getText().toString());
-                assessment.setAssessmentInfo(assessmentNotes.getText().toString());
 
-
-                if (assessment.getAssessmentName().isEmpty() ||
-                        assessment.getAssessmentDueDate().toString().isEmpty() ||
-                        assessment.getAssessmentInfo().isEmpty() || courseSelected == null)
+                if (assessmentName.getText().toString().isEmpty() ||
+                        assessmentDueDate.getText().toString().isEmpty() ||
+                        assessmentNotes.getText().toString().isEmpty() || courseSelected == null)
                     Snackbar.make(view, "Error! Name, Due Date, Notes and Course can't be blank.",
                             Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 else {
+                    assessment.setAssessmentName(assessmentName.getText().toString());
+                    assessment.setAssessmentDueDate(DateTypeConverter.toDate(assessmentDueDate.getText().toString()));
+                    assessment.setAssessmentType(assessmentType.getText().toString());
+                    assessment.setAssessmentInfo(assessmentNotes.getText().toString());
                     assessment.setCourseIdFk(course.getCourseId());
                     replyIntent.putExtra("Assessment", assessment);
                     // replyIntent.putExtra("CourseName", courseName);
                     setResult(RESULT_OK, replyIntent);
+                    finish();
                 }
-                finish();
             }
         });
     }

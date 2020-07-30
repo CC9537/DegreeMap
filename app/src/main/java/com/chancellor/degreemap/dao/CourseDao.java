@@ -23,8 +23,17 @@ public interface CourseDao {
     @Query("SELECT * FROM courses WHERE term_id_fk = :termId")
     LiveData<List<Course>> getCoursesByTermId(int termId);
 
-//    @Query("SELECT mentor_id_fk FROM courses WHERE course_id = :courseId LIMIT 1;")
-//    int getMentorIdByCourseId(int courseId);
+    @Query("SELECT COUNT(*) FROM courses")
+    int countCourses();
+
+    @Query("SELECT COUNT(*) FROM courses WHERE course_status = 'Pending'")
+    int countCoursesPending();
+
+    @Query("SELECT COUNT(*) FROM courses WHERE course_status = 'In Progress'")
+    int countCoursesInProgress();
+
+    @Query("SELECT COUNT(*) FROM courses WHERE course_status = 'Complete'")
+    int countCoursesComplete();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void createCourse(Course course);
